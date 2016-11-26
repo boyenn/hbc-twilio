@@ -17,12 +17,13 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class BridgeDate {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private long id;
     private LocalDate bridgeDate;
-    @OneToMany(mappedBy = "bridgeDate", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bridgeDate", fetch = FetchType.EAGER)
     private List<BridgeUserAssociation> userAssociations = new ArrayList<>();
 
     public BridgeDate() {
@@ -35,14 +36,8 @@ public class BridgeDate {
     }
 
     public void addUser(User user, boolean isComing) {
-        BridgeUserAssociation bridgeUserAssociation = new BridgeUserAssociation();
-        bridgeUserAssociation.setUser(user);
-        bridgeUserAssociation.setUserid(user.getId());
-        bridgeUserAssociation.setBridgeDate(this);
-        bridgeUserAssociation.setBridgedateid(this.getId());
-        bridgeUserAssociation.setComing(isComing);
-        this.userAssociations.add(bridgeUserAssociation);
-        user.getBridgeAssociations().add(bridgeUserAssociation);
+
+
     }
 
     public long getId() {

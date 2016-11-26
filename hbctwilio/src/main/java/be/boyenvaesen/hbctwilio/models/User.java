@@ -24,7 +24,7 @@ public class User {
     private String phoneNumber;
     private String firstName;
     private String lastName;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<BridgeUserAssociation> bridgeAssociations = new ArrayList<>();
 
     public User(String emailAdress, String phoneNumber, String firstName, String lastName) {

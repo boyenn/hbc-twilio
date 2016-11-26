@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+import be.boyenvaesen.hbctwilio.helpers.RegistrationMessage;
+
 /**
  * Created by Boyen on 26/11/2016.
  */
@@ -29,6 +31,14 @@ public class MessageHandler {
         }
         return !(!deconstructed[4].toUpperCase().equals("JA") && !deconstructed[4].toUpperCase().equals("NEE"));
 
+    }
+
+    public RegistrationMessage getRegistrationMessage() {
+
+        String[] deconstructed = messageBody.split(" ");
+        LocalDate localDate = LocalDate.parse(deconstructed[3], DateTimeFormatter.ofPattern("dd/MM/yyyy").withLocale(Locale.US));
+        boolean isComing = deconstructed[4].toUpperCase().equals("JA");
+        return new RegistrationMessage(deconstructed[0], deconstructed[1], localDate, isComing);
     }
 
 

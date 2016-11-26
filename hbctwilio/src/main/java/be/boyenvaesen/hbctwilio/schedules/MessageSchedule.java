@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import be.boyenvaesen.hbctwilio.handlers.MessageHandler;
+import be.boyenvaesen.hbctwilio.helpers.RegistrationMessage;
 import be.boyenvaesen.hbctwilio.services.TwilioService;
 
 @Component
@@ -28,7 +29,8 @@ public class MessageSchedule {
     private void handleMessage(Message message) {
         MessageHandler messageHandler = new MessageHandler(message.getSid(), message.getBody());
         if (messageHandler.isRegistrationMessage()) {
-
+            RegistrationMessage registrationMessage = messageHandler.getRegistrationMessage();
+            System.out.println();
         }
     }
 }

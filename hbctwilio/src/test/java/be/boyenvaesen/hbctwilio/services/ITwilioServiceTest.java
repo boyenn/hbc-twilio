@@ -2,15 +2,14 @@ package be.boyenvaesen.hbctwilio.services;
 
 import com.twilio.rest.api.v2010.account.Message;
 
-import org.joda.time.DateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.assertj.jodatime.api.Assertions.assertThat;
-
+import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ITwilioServiceTest {
@@ -18,10 +17,31 @@ public class ITwilioServiceTest {
     TwilioService twilioService;
 
     @Test
+    @Ignore
     public void sendMessage() {
-        Message m = twilioService.sendMessage();
+        Message m = twilioService.sendTestMessage();
         m.getSid();
-        assertThat(m.getDateSent()).isEqualToIgnoringSeconds(new DateTime());
+        assertThat(m.getStatus()).isEqualTo(Message.Status.SENT);
 
     }
+
+    @Test
+    public void checkGetMessages() {
+        twilioService.getReceivedMessages().forEach(message -> System.out.println("message.getBody() = " + message.getBody()));
+
+    }
+
+    @Test
+    public void checkUnhandledImages() {
+        twilioService.getUnhandledMessages().forEach(message -> System.out.println("message.getBody() = " + message.getBody()));
+        twilioService.getUnhandledMessages().forEach(message -> twilioService.saveMessageToDatabase(message));
+        assertThat(twilioService.getUnhandledMessages()).isEmpty();
+    }
+
+    @Test
+    public void checkHandledImages() {
+        twilioService.getHandledMessages().forEach(message -> System.out.println("message.getBody() = " + message.getBody()));
+    }
+
+
 }

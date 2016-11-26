@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ITwilioService {
-     Message sendMessage();
+     Message sendTestMessage();
 }

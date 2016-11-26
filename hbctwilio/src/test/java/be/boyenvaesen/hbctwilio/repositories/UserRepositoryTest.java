@@ -23,7 +23,10 @@ public class UserRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "boyen", "vaesen"));
+
+        User user = new User("boyenvaesen@hotmail.com", "+32468252393", "boyen", "vaesen");
+
+        userRepository.save(user);
 
     }
 

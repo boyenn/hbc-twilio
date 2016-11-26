@@ -35,13 +35,7 @@ public class BridgeUserAssociation {
     public BridgeUserAssociation() {
     }
 
-    public BridgeUserAssociation(long userid, long bridgedateid, boolean isComing, User user, BridgeDate bridgeDate) {
-        this.userid = userid;
-        this.bridgedateid = bridgedateid;
-        this.isComing = isComing;
-        this.user = user;
-        this.bridgeDate = bridgeDate;
-    }
+
 
     public long getUserid() {
         return userid;
@@ -103,4 +97,27 @@ class BridgeUserAssociationId implements Serializable {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "BridgeUserAssociationId{" +
+                "userid=" + userid +
+                ", bridgedateid=" + bridgedateid +
+                '}';
+    }
+
+    public long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(long userid) {
+        this.userid = userid;
+    }
+
+    public long getBridgedateid() {
+        return bridgedateid;
+    }
+
+    public void setBridgedateid(long bridgedateid) {
+        this.bridgedateid = bridgedateid;
+    }
 }

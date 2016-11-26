@@ -27,8 +27,8 @@ public class MessageHandler {
             ex.printStackTrace();
             return false;
         }
+        return !(!deconstructed[4].toUpperCase().equals("JA") && !deconstructed[4].toUpperCase().equals("NEE"));
 
-        return true;
     }
 
 

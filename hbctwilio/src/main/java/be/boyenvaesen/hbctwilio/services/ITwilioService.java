@@ -1,8 +1,11 @@
 package be.boyenvaesen.hbctwilio.services;
 
-/**
- * Created by Boyen on 25/11/2016.
- */
-public interface ITwilioService {
+import com.twilio.rest.api.v2010.account.Message;
 
+import org.springframework.stereotype.Service;
+
+
+@Service
+public interface ITwilioService {
+     Message sendMessage();
 }

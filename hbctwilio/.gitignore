@@ -22,3 +22,6 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+/apikeys.properties
+/src/main/resources/apikeys.properties

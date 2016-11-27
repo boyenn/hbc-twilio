@@ -35,20 +35,22 @@ public class UserServiceTest {
     @Autowired
     UserService userService;
 
+    private User userSetup;
+
     @Before
     public void setUp() throws Exception {
 
         bridgeUserAssociationRepository.deleteAll();
         userRepository.deleteAll();
         bridgeDateRepository.deleteAll();
-        User user = new User("boyenvaesen@hotmail.com", "+32468252393", "boyen", "vaesen");
+        userSetup = new User("boyenvaesen@hotmail.com", "+32468252393", "boyen", "vaesen");
         BridgeDate bridgeDate = new BridgeDate(LocalDate.now());
         bridgeDateRepository.save(bridgeDate);
-        userRepository.save(user);
+        userRepository.save(userSetup);
 
         BridgeUserAssociation bridgeUserAssociation = new BridgeUserAssociation();
-        bridgeUserAssociation.setUser(user);
-        bridgeUserAssociation.setUserid(user.getId());
+        bridgeUserAssociation.setUser(userSetup);
+        bridgeUserAssociation.setUserid(userSetup.getId());
         bridgeUserAssociation.setBridgeDate(bridgeDate);
         bridgeUserAssociation.setBridgedateid(bridgeDate.getId());
         bridgeUserAssociation.setComing(true);
@@ -69,5 +71,6 @@ public class UserServiceTest {
         assertThat(user.getBridgeAssociations()).hasSize(1);
         assertThat(user.getBridgeAssociations().get(0).getBridgeDate().getBridgeDate()).isToday();
     }
+
 
 }

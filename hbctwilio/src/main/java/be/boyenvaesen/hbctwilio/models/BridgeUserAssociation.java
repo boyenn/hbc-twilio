@@ -33,6 +33,14 @@ public class BridgeUserAssociation {
     public BridgeUserAssociation() {
     }
 
+    public BridgeUserAssociation(BridgeDate bridgeDate, User user, boolean isComing) {
+        this.user = user;
+        this.userid = user.getId();
+        this.bridgeDate = bridgeDate;
+        this.bridgedateid = bridgeDate.getId();
+        this.isComing = isComing;
+    }
+
 
 
     public long getUserid() {

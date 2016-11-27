@@ -1,8 +1,5 @@
 package be.boyenvaesen.hbctwilio.services;
 
-import com.twilio.rest.api.v2010.account.Message;
-
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +13,12 @@ public class ITwilioServiceTest {
     @Autowired
     TwilioService twilioService;
 
-    @Test
-    @Ignore
-    public void sendMessage() {
-        Message m = twilioService.sendTestMessage();
-        m.getSid();
-        assertThat(m.getStatus()).isEqualTo(Message.Status.SENT);
 
-    }
 
     @Test
     public void checkGetMessages() {
         twilioService.getReceivedMessages().forEach(message -> System.out.println("message.getBody() = " + message.getBody()));
-
+        assertThat(twilioService.getReceivedMessages()).isNotEmpty();
     }
 
     @Test
@@ -41,6 +31,8 @@ public class ITwilioServiceTest {
     @Test
     public void checkHandledImages() {
         twilioService.getHandledMessages().forEach(message -> System.out.println("message.getBody() = " + message.getBody()));
+        twilioService.getUnhandledMessages().forEach(message -> twilioService.saveMessageToDatabase(message));
+        assertThat(twilioService.getHandledMessages()).isNotEmpty();
     }
 
 

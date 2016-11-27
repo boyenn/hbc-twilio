@@ -37,7 +37,7 @@ public class UserRepositoryTest {
 
     @Test
     public void findUserByFirstNameAndLastName() throws Exception {
-        User userByFirstNameAndLastName = userRepository.findUserByFirstNameAndLastName("boyen", "vaesen");
+        User userByFirstNameAndLastName = userRepository.findUserByFirstNameIgnoreCaseAndLastNameIgnoreCase("boyen", "vaesen");
         assertThat(userByFirstNameAndLastName)
                 .extracting("firstName", "lastName").containsOnly("boyen", "vaesen");
         assertThat(userByFirstNameAndLastName.getFirstName()).isEqualToIgnoringCase("boyen");

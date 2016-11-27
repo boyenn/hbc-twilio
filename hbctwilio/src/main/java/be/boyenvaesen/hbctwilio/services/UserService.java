@@ -14,7 +14,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
     public User getUserByName(String firstName, String lastName) {
-        return userRepository.findUserByFirstNameAndLastName(firstName, lastName);
+        return userRepository.findUserByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName);
 
     }
 }

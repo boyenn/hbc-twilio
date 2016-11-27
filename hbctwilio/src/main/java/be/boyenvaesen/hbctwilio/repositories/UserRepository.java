@@ -10,5 +10,5 @@ import be.boyenvaesen.hbctwilio.models.User;
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findUserByFirstNameAndLastName(String firstName, String lastName);
+    User findUserByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
 }

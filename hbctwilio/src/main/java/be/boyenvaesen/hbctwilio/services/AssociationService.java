@@ -10,15 +10,11 @@ import be.boyenvaesen.hbctwilio.models.BridgeUserAssociation;
 import be.boyenvaesen.hbctwilio.models.User;
 import be.boyenvaesen.hbctwilio.repositories.BridgeUserAssociationRepository;
 
-/**
- * Created by Boyen on 27/11/2016.
- */
+
 @Service
 public class AssociationService {
     @Autowired
-    BridgeService bridgeService;
-    @Autowired
-    private TwilioService twilioService;
+    private BridgeService bridgeService;
     @Autowired
     private BridgeUserAssociationRepository bridgeUserAssociationRepository;
     @Autowired
@@ -28,15 +24,19 @@ public class AssociationService {
             throws AssociationException {
 
         User userByName = userService.getUserByName(registrationMessage.getFirstName(), registrationMessage.getLastName());
-        if (userByName == null) throw new AssociationException("User not found");
+        if (userByName == null)
+            throw new AssociationException("User not found(" + registrationMessage.getFirstName()
+                    + " " + registrationMessage.getLastName() + ")");
+
         BridgeDate bridgeDate = bridgeService.getBridgeDateByDate(registrationMessage.getDate());
-        if (bridgeDate == null) throw new AssociationException("Bridgedate not found");
+        if (bridgeDate == null)
+            throw new AssociationException("Bridgedate not found(" + registrationMessage.getDate() + ")");
         if (userByName.getBridgeAssociations().stream().noneMatch(
                 c -> c.getBridgeDate().getBridgeDate() == bridgeDate.getBridgeDate())) {
             BridgeUserAssociation bridgeUserAssociation = new BridgeUserAssociation(
                     bridgeDate,
                     userByName,
-                    registrationMessage.isComing()
+                    registrationMessage.getComing()
             );
             userByName.getBridgeAssociations().add(bridgeUserAssociation);
             bridgeDate.getUserAssociations().add(bridgeUserAssociation);
@@ -45,7 +45,7 @@ public class AssociationService {
             BridgeUserAssociation bridgeUserAssociation = userByName.getBridgeAssociations().stream().filter(
                     c -> c.getBridgeDate().getBridgeDate() == bridgeDate.getBridgeDate()
             ).findFirst().get();
-            bridgeUserAssociation.setComing(registrationMessage.isComing());
+            bridgeUserAssociation.setIsComing(registrationMessage.getComing());
 
         }
 

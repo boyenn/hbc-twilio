@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+import be.boyenvaesen.hbctwilio.helpers.ComingEnum;
 import be.boyenvaesen.hbctwilio.helpers.RegistrationMessage;
 
 /**
@@ -37,8 +38,13 @@ public class MessageHandler {
 
         String[] deconstructed = messageBody.split(" ");
         LocalDate localDate = LocalDate.parse(deconstructed[3], DateTimeFormatter.ofPattern("dd/MM/yyyy").withLocale(Locale.US));
-        boolean isComing = deconstructed[4].toUpperCase().equals("JA");
-        return new RegistrationMessage(deconstructed[0], deconstructed[1], localDate, isComing);
+        ComingEnum comingEnum;
+        if (deconstructed[4].toUpperCase().equals("JA")) {
+            comingEnum = ComingEnum.YES;
+        } else {
+            comingEnum = ComingEnum.NO;
+        }
+        return new RegistrationMessage(deconstructed[1], deconstructed[2], localDate, comingEnum);
     }
 
 

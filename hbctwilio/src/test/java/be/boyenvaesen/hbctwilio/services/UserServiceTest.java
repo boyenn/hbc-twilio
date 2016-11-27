@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 
+import be.boyenvaesen.hbctwilio.helpers.ComingEnum;
 import be.boyenvaesen.hbctwilio.models.BridgeDate;
 import be.boyenvaesen.hbctwilio.models.BridgeUserAssociation;
 import be.boyenvaesen.hbctwilio.models.User;
@@ -53,7 +54,7 @@ public class UserServiceTest {
         bridgeUserAssociation.setUserid(userSetup.getId());
         bridgeUserAssociation.setBridgeDate(bridgeDate);
         bridgeUserAssociation.setBridgedateid(bridgeDate.getId());
-        bridgeUserAssociation.setComing(true);
+        bridgeUserAssociation.setIsComing(ComingEnum.YES);
         bridgeUserAssociationRepository.save(bridgeUserAssociation);
     }
 

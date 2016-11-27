@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 
 import be.boyenvaesen.hbctwilio.exceptions.AssociationException;
+import be.boyenvaesen.hbctwilio.helpers.ComingEnum;
 import be.boyenvaesen.hbctwilio.helpers.RegistrationMessage;
 import be.boyenvaesen.hbctwilio.models.BridgeDate;
 import be.boyenvaesen.hbctwilio.models.User;
@@ -57,7 +58,7 @@ public class AssociationServiceTest {
         RegistrationMessage registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",
-                LocalDate.now(), true
+                LocalDate.now(), ComingEnum.YES
         );
         associationService.addAssociationFromMessage(registrationMessage);
         BridgeDate bridgeDate = bridgeDateRepository.findBridgeDateByBridgeDate(LocalDate.now());
@@ -73,7 +74,7 @@ public class AssociationServiceTest {
         RegistrationMessage registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",
-                LocalDate.now(), true
+                LocalDate.now(), ComingEnum.YES
         );
         associationService.addAssociationFromMessage(registrationMessage);
         BridgeDate bridgeDate = bridgeDateRepository.findBridgeDateByBridgeDate(LocalDate.now());
@@ -90,7 +91,7 @@ public class AssociationServiceTest {
         RegistrationMessage registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",
-                LocalDate.now(), true
+                LocalDate.now(), ComingEnum.YES
         );
         associationService.addAssociationFromMessage(registrationMessage);
         BridgeDate bridgeDate = bridgeDateRepository.findBridgeDateByBridgeDate(LocalDate.now());
@@ -107,17 +108,17 @@ public class AssociationServiceTest {
         RegistrationMessage registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",
-                LocalDate.now(), true
+                LocalDate.now(), ComingEnum.YES
         );
         associationService.addAssociationFromMessage(registrationMessage);
         BridgeDate bridgeDate = bridgeDateRepository.findBridgeDateByBridgeDate(LocalDate.now());
         User user = userRepository.findUserByFirstNameIgnoreCaseAndLastNameIgnoreCase("boyen", "vaesen");
-        Assertions.assertThat(user.getBridgeAssociations().get(0).isComing()).isTrue();
+        Assertions.assertThat(user.getBridgeAssociations().get(0).getIsComing()).isEqualTo(ComingEnum.YES);
         Assertions.assertThat(bridgeDate.getUserAssociations().get(0).getUser().getFirstName()).isEqualToIgnoringCase("boyen");
         registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",
-                LocalDate.now(), false
+                LocalDate.now(), ComingEnum.NO
         );
         associationService.addAssociationFromMessage(registrationMessage);
         bridgeDate = bridgeDateRepository.findBridgeDateByBridgeDate(LocalDate.now());
@@ -126,7 +127,7 @@ public class AssociationServiceTest {
                 user.getBridgeAssociations().get(0).getBridgeDate().getBridgeDate())
                 .isEqualTo(bridgeDate.getBridgeDate());
 
-        Assertions.assertThat(user.getBridgeAssociations().get(0).isComing()).isFalse();
+        Assertions.assertThat(user.getBridgeAssociations().get(0).getIsComing()).isEqualTo(ComingEnum.NO);
         Assertions.assertThat(user.getBridgeAssociations()).hasSize(1);
     }
 

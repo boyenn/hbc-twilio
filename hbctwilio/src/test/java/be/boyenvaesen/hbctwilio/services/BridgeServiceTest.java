@@ -23,6 +23,8 @@ public class BridgeServiceTest {
     @Autowired
     BridgeDateRepository bridgeDateRepository;
 
+    @Autowired
+    BridgeService bridgeService;
     @Before
     public void setUp() throws Exception {
         bridgeDateRepository.deleteAll();
@@ -36,9 +38,9 @@ public class BridgeServiceTest {
 
     @Test
     public void getBridgeDateByDate() throws Exception {
-        Assertions.assertThat(bridgeDateRepository.findBridgeDateByBridgeDate(LocalDate.now())).isNotNull();
+        Assertions.assertThat(bridgeService.getBridgeDateByDate(LocalDate.now())).isNotNull();
         Assertions.assertThat((
-                bridgeDateRepository.findBridgeDateByBridgeDate(LocalDate.now()).getBridgeDate()))
+                bridgeService.getBridgeDateByDate(LocalDate.now()).getBridgeDate()))
                 .isToday();
 
     }

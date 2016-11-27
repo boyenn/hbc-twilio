@@ -8,6 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import be.boyenvaesen.hbctwilio.helpers.ComingEnum;
+
 /**
  * Created by Boyen on 26/11/2016.
  */
@@ -20,20 +22,17 @@ public class BridgeUserAssociation {
     @Id
     private long bridgedateid;
     @Column(name = "isComing")
-    private boolean isComing;
+    private ComingEnum isComing;
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private User user;
-
     @ManyToOne
     @PrimaryKeyJoinColumn(name = "BRIDGE_DATE_ID", referencedColumnName = "ID")
     private BridgeDate bridgeDate;
-
-
     public BridgeUserAssociation() {
     }
 
-    public BridgeUserAssociation(BridgeDate bridgeDate, User user, boolean isComing) {
+    public BridgeUserAssociation(BridgeDate bridgeDate, User user, ComingEnum isComing) {
         this.user = user;
         this.userid = user.getId();
         this.bridgeDate = bridgeDate;
@@ -41,7 +40,13 @@ public class BridgeUserAssociation {
         this.isComing = isComing;
     }
 
+    public ComingEnum getIsComing() {
+        return isComing;
+    }
 
+    public void setIsComing(ComingEnum isComing) {
+        this.isComing = isComing;
+    }
 
     public long getUserid() {
         return userid;
@@ -59,13 +64,7 @@ public class BridgeUserAssociation {
         this.bridgedateid = bridgedateid;
     }
 
-    public boolean isComing() {
-        return isComing;
-    }
 
-    public void setComing(boolean coming) {
-        isComing = coming;
-    }
 
     public User getUser() {
         return user;

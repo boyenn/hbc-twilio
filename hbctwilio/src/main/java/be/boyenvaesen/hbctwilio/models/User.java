@@ -24,6 +24,8 @@ public class User {
     private String phoneNumber;
     private String firstName;
     private String lastName;
+    private boolean isDefault;
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<BridgeUserAssociation> bridgeAssociations = new ArrayList<>();
 

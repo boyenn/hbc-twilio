@@ -9,9 +9,9 @@ public class RegistrationMessage {
     private String firstName;
     private String lastName;
     private LocalDate date;
-    private boolean coming;
+    private ComingEnum coming;
 
-    public RegistrationMessage(String firstName, String lastName, LocalDate date, boolean coming) {
+    public RegistrationMessage(String firstName, String lastName, LocalDate date, ComingEnum coming) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.date = date;
@@ -42,11 +42,11 @@ public class RegistrationMessage {
         this.date = date;
     }
 
-    public boolean isComing() {
+    public ComingEnum getComing() {
         return coming;
     }
 
-    public void setComing(boolean coming) {
+    public void setComing(ComingEnum coming) {
         this.coming = coming;
     }
 }

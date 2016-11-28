@@ -20,9 +20,7 @@ import be.boyenvaesen.hbctwilio.repositories.BridgeDateRepository;
 import be.boyenvaesen.hbctwilio.repositories.BridgeUserAssociationRepository;
 import be.boyenvaesen.hbctwilio.repositories.UserRepository;
 
-/**
- * Created by Boyen on 27/11/2016.
- */
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class AssociationServiceTest {
@@ -70,7 +68,7 @@ public class AssociationServiceTest {
 
     @Test(expected = AssociationException.class)
     public void addAssociationOnNonExistingBridgeDate() throws Exception {
-        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen"));
+        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen",false));
         RegistrationMessage registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",
@@ -87,7 +85,7 @@ public class AssociationServiceTest {
     @Test
     public void addAssociation() throws Exception {
         bridgeDateRepository.save(new BridgeDate(LocalDate.now()));
-        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen"));
+        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen",false));
         RegistrationMessage registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",
@@ -104,7 +102,7 @@ public class AssociationServiceTest {
     @Test
     public void changeAssociation() throws Exception {
         bridgeDateRepository.save(new BridgeDate(LocalDate.now()));
-        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen"));
+        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen",false));
         RegistrationMessage registrationMessage = new RegistrationMessage(
                 "boyen",
                 "vaesen",

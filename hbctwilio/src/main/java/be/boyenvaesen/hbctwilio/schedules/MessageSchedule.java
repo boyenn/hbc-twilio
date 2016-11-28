@@ -4,6 +4,7 @@ package be.boyenvaesen.hbctwilio.schedules;
 import com.twilio.rest.api.v2010.account.Message;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -28,22 +29,24 @@ public class MessageSchedule {
     BridgeDateRepository bridgeDateRepository;
     @Autowired
     AssociationService associationService;
+    @Value("${hbctwilio.membersneeded}")
+    private int membersNeeded;
 
     /*TODO : After deployment, switch from manually checking for new messages to defining a rest EndPoint (webhook)
       TODO: so that twilio can notify us of new messages instead of checking ourselves.
     *
     */
-
+    @Scheduled(fixedRate = 10000L)
     public void handleNewMessages() {
-
-        twilioService.getUnhandledMessages().forEach(c -> System.out.println(c.getSid()));
+        checkForNewDates();
+        twilioService.getUnhandledMessages().forEach(c -> System.out.println("Will handle : " +c.getSid()));
         twilioService.getUnhandledMessages().forEach(this::handleMessage);
     }
 
     @Scheduled(cron = "0 22 * * * ?")
     public void checkForNewDates() {
         LocalDate localDate = LocalDate.now();
-        LocalDate endDate = localDate.plusYears(1);
+        LocalDate endDate = localDate.plusMonths(1);
         List<LocalDate> thursdays = new ArrayList<>();
         boolean reachedAThursday = false;
         while (localDate.isBefore(endDate)) {
@@ -58,12 +61,10 @@ public class MessageSchedule {
             }
         }
 
-        for (LocalDate th : thursdays) {
-            if (bridgeDateRepository.findBridgeDateByBridgeDate(th) == null) {
-                System.out.println("saving new Date : " + th);
-                bridgeDateRepository.save(new BridgeDate(th));
-            }
-        }
+        thursdays.stream().filter(th -> bridgeDateRepository.findBridgeDateByBridgeDate(th) == null).forEach(th -> {
+            System.out.println("saving new Date : " + th);
+            bridgeDateRepository.save(new BridgeDate(th));
+        });
 
     }
 
@@ -72,8 +73,10 @@ public class MessageSchedule {
         if (messageHandler.isRegistrationMessage()) {
             RegistrationMessage registrationMessage = messageHandler.getRegistrationMessage();
             try {
+
                 associationService.addAssociationFromMessage(registrationMessage);
                 System.out.println("Successfully added an association message :O :O :O ");
+
             } catch (AssociationException ex) {
 
                 System.out.println(ex.getMessage() + " : " + message.getBody());

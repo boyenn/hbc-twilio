@@ -12,8 +12,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="bridgeuser")
 public class User {
     @Id
     @Column(name = "ID")
@@ -29,11 +31,12 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<BridgeUserAssociation> bridgeAssociations = new ArrayList<>();
 
-    public User(String emailAdress, String phoneNumber, String firstName, String lastName) {
+    public User(String emailAdress, String phoneNumber, String firstName, String lastName,boolean isDefault) {
         this.emailAdress = emailAdress;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isDefault = isDefault;
     }
 
     public User() {
@@ -85,5 +88,13 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
     }
 }

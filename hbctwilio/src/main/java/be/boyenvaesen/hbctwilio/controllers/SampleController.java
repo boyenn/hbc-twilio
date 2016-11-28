@@ -6,18 +6,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import be.boyenvaesen.hbctwilio.models.User;
+
 @Controller
 public class SampleController {
 
     @RequestMapping(value = "/greeting", method = RequestMethod.GET)
     public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
-        /*User user = new User();
+        User user = new User();
         user.setFirstName("boyen");
         user.setLastName("vaesen");
 
         model.addAttribute("user", user);
         model.addAttribute("name", name);
-        */
+
         return "greeting";
     }
 

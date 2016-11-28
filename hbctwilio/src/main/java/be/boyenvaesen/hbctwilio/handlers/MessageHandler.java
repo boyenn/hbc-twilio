@@ -8,9 +8,7 @@ import java.util.Locale;
 import be.boyenvaesen.hbctwilio.helpers.ComingEnum;
 import be.boyenvaesen.hbctwilio.helpers.RegistrationMessage;
 
-/**
- * Created by Boyen on 26/11/2016.
- */
+
 public class MessageHandler {
     private String messageSid;
     private String messageBody;

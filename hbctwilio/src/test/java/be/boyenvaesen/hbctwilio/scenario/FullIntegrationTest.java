@@ -14,9 +14,7 @@ import be.boyenvaesen.hbctwilio.repositories.UserRepository;
 import be.boyenvaesen.hbctwilio.schedules.MessageSchedule;
 import be.boyenvaesen.hbctwilio.services.TwilioService;
 
-/**
- * Created by Boyen on 27/11/2016.
- */
+
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class FullIntegrationTest {
@@ -33,7 +31,8 @@ public class FullIntegrationTest {
     @Before
     public void setUp() {
         messageSchedule.checkForNewDates();
-        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen"));
+        userRepository.save(new User("boyenvaesen@hotmail.com", "+32468252393", "Boyen", "Vaesen",false));
+  //      userRepository.save(new User("simongeelen@hotmail.com", "+32499161715", "Simon", "Geelen",false));
     }
 
     @Test

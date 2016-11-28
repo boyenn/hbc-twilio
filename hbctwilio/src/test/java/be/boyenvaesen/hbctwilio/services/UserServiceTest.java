@@ -44,7 +44,7 @@ public class UserServiceTest {
         bridgeUserAssociationRepository.deleteAll();
         userRepository.deleteAll();
         bridgeDateRepository.deleteAll();
-        userSetup = new User("boyenvaesen@hotmail.com", "+32468252393", "boyen", "vaesen");
+        userSetup = new User("boyenvaesen@hotmail.com", "+32468252393", "boyen", "vaesen",false);
         BridgeDate bridgeDate = new BridgeDate(LocalDate.now());
         bridgeDateRepository.save(bridgeDate);
         userRepository.save(userSetup);

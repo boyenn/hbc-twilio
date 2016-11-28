@@ -9,11 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import be.boyenvaesen.hbctwilio.models.DatabaseMessage;
+import be.boyenvaesen.hbctwilio.models.User;
 import be.boyenvaesen.hbctwilio.repositories.MessageDatabaseRepository;
 
 
@@ -54,7 +59,8 @@ public class TwilioService implements ITwilioService {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
         ResourceSet<Message> twilioMessages = Message.reader().setTo(new PhoneNumber(SENDER_PHONE_NUMBER))
                 .read();
-        List<String> handledSids = messageDatabaseRepository.findAll().stream().map(c -> c.getSid()).collect(Collectors.toList());
+
+        List<String> handledSids = getHandledMessages().stream().map(c -> c.getSid()).collect(Collectors.toList());
 
         List<Message> unhandledMessages = StreamSupport.stream(twilioMessages.spliterator(), false).filter(c -> !handledSids.contains(c.getSid())
         ).collect(Collectors.toList());
@@ -63,8 +69,10 @@ public class TwilioService implements ITwilioService {
     }
 
     public List<DatabaseMessage> getHandledMessages() {
+        List<DatabaseMessage> target = new ArrayList<>();
 
-        return messageDatabaseRepository.findAll();
+         messageDatabaseRepository.findAll().forEach(target::add);
+        return target;
     }
 
 
@@ -90,4 +98,18 @@ public class TwilioService implements ITwilioService {
     }
 
 
+    public  void sendRequestMessage(User c, LocalDate localDate) {
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        Locale dutchLoc = new Locale("nl");
+        String longDateString = DateTimeFormatter.ofPattern("d MMMM , yyyy",dutchLoc).format(localDate);
+        String shortDateString = DateTimeFormatter.ofPattern("dd/MM/yyyy", dutchLoc).format(localDate);
+
+        String messageToSend = String.format("%1$s %2$s, er is op %3$s iemand nodig om mee te komen bridgen. Als jij kan komen, gelieve dan te antwoorden met " +
+                "\"Bridge %1$s %2$s %4$s JA\" , aanhalingstekens weglaten!", c.getFirstName(), c.getLastName(), longDateString, shortDateString);
+
+        System.out.println("messageToSend = " + messageToSend);
+        /*Message.creator(new PhoneNumber(c.getPhoneNumber()),
+                new PhoneNumber(SENDER_PHONE_NUMBER),
+                c.getFirstName() + " " + c.getLastName() + ", ").create();*/
+    }
 }
